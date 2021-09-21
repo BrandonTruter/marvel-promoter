@@ -1,0 +1,11 @@
+development:
+  endpoint: v1/public
+  base_url: https://gateway.marvel.com
+  public_key: 5f3ca374aec85caae447eff6ff94fed3
+  private_key: f10bc178862ee730c312491f165d4cc36d22d77c
+
+test:
+  endpoint: v1/public
+  base_url: https://gateway.marvel.com
+  public_key: 5f3ca374aec85caae447eff6ff94fed3
+  private_key: f10bc178862ee730c312491f165d4cc36d22d77c
