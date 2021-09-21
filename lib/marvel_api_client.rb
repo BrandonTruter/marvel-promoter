@@ -12,7 +12,7 @@ class MarvelApiClient
     _md5.hexdigest
   end
 
-  def self.characters()
+  def self.list_characters()
     timestamp = Time.now
     api_hash = set_md5(timestamp)
     api_config = MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
@@ -20,6 +20,18 @@ class MarvelApiClient
     base_url = api_config["base_url"]
     endpoint = api_config["endpoint"]
     url = "#{base_url}/#{endpoint}/characters"
+    response = Faraday.get(url, {apikey: api_key, ts: timestamp, hash: api_hash})
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
+  def self.fetch_character(character_id)
+    timestamp = Time.now
+    api_hash = set_md5(timestamp)
+    api_config = MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
+    api_key = api_config["public_key"]
+    base_url = api_config["base_url"]
+    endpoint = api_config["endpoint"]
+    url = "#{base_url}/#{endpoint}/characters/#{character_id}"
     response = Faraday.get(url, {apikey: api_key, ts: timestamp, hash: api_hash})
     JSON.parse(response.body, symbolize_names: true)
   end
