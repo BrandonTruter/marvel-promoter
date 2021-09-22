@@ -3,36 +3,44 @@ require "faraday"
 require "json"
 
 class MarvelApiClient
+  def self.marvel_configs
+    MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
+  end
   def self.set_md5(ts)
     md5 = Digest::MD5.new
-    api_config = MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
-    pub_key = api_config["public_key"]
-    pvt_key = api_config["private_key"]
+    pub_key = marvel_configs["public_key"]
+    pvt_key = marvel_configs["private_key"]
     _md5 = md5.update "#{ts}#{pvt_key}#{pub_key}"
     _md5.hexdigest
   end
-
   def self.list_characters()
-    timestamp = Time.now
-    api_hash = set_md5(timestamp)
-    api_config = MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
-    api_key = api_config["public_key"]
-    base_url = api_config["base_url"]
-    endpoint = api_config["endpoint"]
-    url = "#{base_url}/#{endpoint}/characters"
-    response = Faraday.get(url, {apikey: api_key, ts: timestamp, hash: api_hash})
+    ts = Time.now
+    hash = set_md5(ts)
+    cfg = marvel_configs
+    url = "#{cfg["url"]}/characters"
+    response = Faraday.get(
+      url, {apikey: cfg["public_key"], ts: ts, hash: hash}
+    )
     JSON.parse(response.body, symbolize_names: true)
   end
-
   def self.fetch_character(character_id)
-    timestamp = Time.now
-    api_hash = set_md5(timestamp)
-    api_config = MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
-    api_key = api_config["public_key"]
-    base_url = api_config["base_url"]
-    endpoint = api_config["endpoint"]
-    url = "#{base_url}/#{endpoint}/characters/#{character_id}"
-    response = Faraday.get(url, {apikey: api_key, ts: timestamp, hash: api_hash})
+    ts = Time.now
+    hash = set_md5(ts)
+    cfg = marvel_configs
+    url = "#{cfg["url"]}/characters/#{character_id}"
+    response = Faraday.get(
+      url, {apikey: cfg["public_key"], ts: ts, hash: hash}
+    )
+    JSON.parse(response.body, symbolize_names: true)
+  end
+  def self.fetch_series(character_id)
+    ts = Time.now
+    hash = set_md5(ts)
+    cfg = marvel_configs
+    url = "#{cfg["url"]}/characters/#{character_id}/series"
+    response = Faraday.get(
+      url, {apikey: cfg["public_key"], ts: ts, hash: hash, orderBy: "title"}
+    )
     JSON.parse(response.body, symbolize_names: true)
   end
 end

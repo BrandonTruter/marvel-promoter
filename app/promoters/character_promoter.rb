@@ -1,7 +1,7 @@
 class CharacterPromoter
  def initialize(character)
    @character = character
-   @iron_man = character[:data][:results][0]
+   @response = character[:data][:results][0]
  end
  def as_marvel
    {
@@ -12,11 +12,19 @@ class CharacterPromoter
  end
  def as_hero
    {
-     name: iron_man[:name],
-     description: iron_man[:description],
-     image: "#{iron_man[:thumbnail][:path]}.#{iron_man[:thumbnail][:extension]}"
+     name: response[:name],
+     description: response[:description],
+     image: "#{response[:thumbnail][:path]}.#{response[:thumbnail][:extension]}"
+   }
+ end
+ def as_series
+   {
+     title: response[:title],
+     description: response[:description],
+     story_count: response[:stories][:returned],
+     image: "#{response[:thumbnail][:path]}.#{response[:thumbnail][:extension]}"
    }
  end
  private
- attr_reader :character, :iron_man
+ attr_reader :character, :response
 end
