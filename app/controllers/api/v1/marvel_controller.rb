@@ -1,16 +1,15 @@
 module Api::V1
   class MarvelController < ApplicationController
-    before_action :find_character
+    before_action :find_characters
 
     def show
-      render json: @character.as_json
+      render json: CharacterPromoter.new(@characters.iron_man).as_hero
     end
 
     private
 
-    def find_character
-      marvel_characters = MarvelApi::Characters.new
-      @character = marvel_characters.iron_man
+    def find_characters
+      @characters = MarvelApi::Characters.new
     end
   end
 end

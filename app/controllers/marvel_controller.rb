@@ -3,19 +3,24 @@ class MarvelController < ApplicationController
 
   def show
     character = @marvel_characters.iron_man
-    unless character
-      flash[:alert] = 'Character not found'
-    end
-    copyright = character[:copyright]
-    etag = character[:etag]
+    hero = CharacterPromoter.new(character).as_hero
+    marvel = CharacterPromoter.new(character).as_marvel
+
+    etag = marvel[:etag]
+    copyright = marvel[:copyright]
+    @attribute = marvel[:attribute]
+    @description = hero[:description]
+    @image_filename = hero[:image]
+    @name = hero[:name]
+
     response = character[:data]
     resp_limit = response[:limit]
     iron_man = response[:results][0]
-    thumbnail = iron_man[:thumbnail]
-    @name = iron_man[:name]
-    @description = iron_man[:description]
-    @attribute = character[:attributionText]
-    @image_filename = "#{thumbnail[:path]}.#{thumbnail[:extension]}"
+    # thumbnail = iron_man[:thumbnail]
+    # @name = iron_man[:name]
+    # @description = iron_man[:description]
+    # @image_filename = "#{thumbnail[:path]}.#{thumbnail[:extension]}"
+    # @attribute = character[:attributionText]
     # uri = iron_man[:resourceURI]
     series = iron_man[:series]
     series_returned = series[:returned]

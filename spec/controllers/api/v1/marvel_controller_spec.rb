@@ -11,11 +11,9 @@ RSpec.describe Api::V1::MarvelController do
       expect(response).to have_http_status(:success)
     end
 
-    it "returns required information" do
-      json_result = json_response["data"]["results"][0]
-      expect(json_response).to have_key("attributionText")
-      expect(json_result).to have_key("description")
-      expect(json_result).to have_key("name")
+    it "returns character details" do
+      expect(json_response).to have_key("description")
+      expect(json_response).to have_key("name")
     end
   end
 end
