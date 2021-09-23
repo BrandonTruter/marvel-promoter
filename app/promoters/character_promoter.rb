@@ -2,6 +2,7 @@ class CharacterPromoter
  def initialize(character)
    @character = character
    @response = character[:data][:results][0]
+   @character_series = character[:data][:results]
  end
  def as_marvel
    {
@@ -14,17 +15,21 @@ class CharacterPromoter
    {
      name: response[:name],
      description: response[:description],
-     image: "#{response[:thumbnail][:path]}.#{response[:thumbnail][:extension]}"
+     image: "#{response[:thumbnail][:path]}.#{response[:thumbnail][:extension]}",
+     image_portrait: "#{response[:thumbnail][:path]}/portrait_xlarge.#{response[:thumbnail][:extension]}",
+     image_standard: "#{response[:thumbnail][:path]}/standard_amazing.#{response[:thumbnail][:extension]}",
+     image_landscape: "#{response[:thumbnail][:path]}/landscape_xlarge.#{response[:thumbnail][:extension]}"
    }
  end
  def as_series
-   {
-     title: response[:title],
-     description: response[:description],
-     story_count: response[:stories][:returned],
-     image: "#{response[:thumbnail][:path]}.#{response[:thumbnail][:extension]}"
-   }
+   character_series.map do |series|
+     {
+       title: series[:title],
+       description: series[:description],
+       image: "#{series[:thumbnail][:path]}/standard_small.#{series[:thumbnail][:extension]}"
+     }
+   end
  end
  private
- attr_reader :character, :response
+ attr_reader :character, :response, :character_series
 end
