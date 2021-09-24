@@ -1,34 +1,55 @@
-<div class="bg-white">
-  <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-    <div class="md:flex">
-      <div class="md:flex-shrink-0">
-        <img class="h-48 w-full object-cover md:w-48" src="<%= @image["standard"] %>" alt="Man looking at item at a store">
-      </div>
-      <div class="p-8">
-        <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Tony Stark</div>
-        <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"><%= @name %></a>
-        <p class="mt-2 text-gray-500"><%= @description %></p>
+<section class="py-8 text-center">
+
+    <div class="max-w-md mx-auto bg-white mb-10 rounded-xl shadow-md overflow-hidden md:max-w-4xl">
+      <div class="md:flex">
+        <div class="md:flex-shrink-0">
+          <img class="h-full w-full object-cover md:w-48" src="<%= @image["portrait"]["fantastic"] %>" alt="Tony Stark aka IronMan">
+        </div>
+        <div class="p-8">
+          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Tony Stark</div>
+          <a href="#" class="block mt-2 text-2xl leading-tight font-medium text-black hover:underline"><%= @name %></a>
+          <p class="mt-4 text-lg text-gray-500"><%= @description %></p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-    <h2 class="sr-only">Series</h2>
+    <p class="text-4xl mt-8">Marvel Series</p>
+    <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+      <h2 class="sr-only">Series</h2>
 
-    <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-      <% @series.each do |series| %>
-        <a href="#" class="group">
-          <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <img src="<%= series[:image] %>" alt="Tall slender porcelain bottle with natural clay textured body and cork stopper." class="w-full h-full object-center object-cover group-hover:opacity-75">
-          </div>
-          <h3 class="mt-4 text-sm text-gray-700">
-            <%= series[:description] %>
-          </h3>
-          <p class="mt-1 text-lg font-medium text-gray-900">
-            <%= series[:title] %>
-          </p>
-        </a>
-      <% end %>
+      <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <% @series.each do |series| %>
+          <%#
+            # standard_images
+            s_small = series[:standard_images][:small]
+            s_medium = series[:standard_images][:medium]
+            s_large = series[:standard_images][:large]
+            s_amazing = series[:standard_images][:amazing]
+            # portrait_images
+            p_small = series[:portrait_images][:small]
+            p_medium = series[:portrait_images][:medium]
+            p_large = series[:portrait_images][:large]
+            p_amazing = series[:portrait_images][:amazing]
+            # landscape_images
+            l_small = series[:landscape_images][:small]
+            l_medium = series[:landscape_images][:medium]
+            l_large = series[:landscape_images][:large]
+            l_amazing = series[:landscape_images][:amazing]
+            series_image = s_small
+          %>
+          <a href="#" class="group">
+            <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+              <img src="<%= series[:standard_images][:amazing] %>" alt="series_image" class="w-full h-full object-center object-cover group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">
+              <%= series[:description] %>
+            </h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">
+              <%= series[:title] %>
+            </p>
+          </a>
+        <% end %>
+      </div>
     </div>
-  </div>
-</div>
+
+</section>
