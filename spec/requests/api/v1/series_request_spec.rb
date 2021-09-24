@@ -7,22 +7,17 @@ RSpec.describe 'Series API', type: :request do
     context "GET /v1/public/characters/:characterId/series" do
       let(:series) { MarvelApi::Characters.new.iron_man_series }
 
-      it 'response is valid' do
+      it 'valid response' do
         expect(json).not_to be_empty
         expect(response).to have_http_status(200)
       end
 
-      it "response ordered by title" do
+      it "ordered by title" do
         expect(series[:data][:results][0][:title]).to start_with 'A'
       end
 
-      it "response contains 10 or more stories" do
-        expect(json["story_count"]).to be >= 10
-      end
-
-      it "response includes the image and description" do
-        expect(json["description"]).to eq(series[:data][:results][0][:description])
-        expect(json["image"]).to include(series[:data][:results][0][:thumbnail][:path])
+      it "includes description" do
+        expect(json["data"]["results"][0]["description"]).to eq(series[:data][:results][0][:description])
       end
     end
   end
