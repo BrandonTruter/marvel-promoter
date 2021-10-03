@@ -1,37 +1,52 @@
 # Marvel Promoter
 
-The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is a solution to the [promote](https://promoteint.com) assessment for integrating with the [MarvelAPI](http://developer.marvel.com/docs) and display a character with associated series collections.
+The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is a solution to the [promote](https://promoteint.com) assessment for integrating with the [MarvelAPI](http://developer.marvel.com/docs) and displaying a character with associated series collections.
 
 ## Dependencies
 
-Before you begin, ensure you have met the following requirements:
+Before you begin, ensure you have met the following requirements:  
 
-  * Recommended versions for `Ruby, Rails, Node`
-    * Node >= v12.0
-    * Ruby >= v3.0
-    * Rails >= v6.0
+  - Node >= v12.0
+  - Ruby >= v3.0
+  - Rails >= v6.0
+
 
 ## Technologies
 
-The application was built using:
-  - Node v16.10.0
-  - Ruby v3.0.2
-  - Rails v6.1.4.1
-  - RSpec-rails v5.0.2
-  - Webpacker v5.4.3
-  - Tailwind v2.2.14
+The application uses the following versions:
+
+  - Node v16.10.0  
+  - Ruby v3.0.2  
+  - Rails v6.1.4.1  
+  - [RSpec-rails](https://github.com/rspec/rspec-rails) v5.0.2
+  - [Webpacker](https://github.com/rails/webpacker) v5.4.3
+  - [Tailwind CSS](https://tailwindcss.com) v2.2.14
+  - [Yarn](https://classic.yarnpkg.com/en/) v1.22.11
+
 
 ## Getting Started
 
-- Cloning the repository:
+- Clone the repository:
 
       git clone git@github.com:BrandonTruter/marvel-promoter.git
 
-- Navigating to the directory:
+- Navigate to project directory:
 
       cd marvel-promoter
 
-- Installing application dependencies:
+- Install application dependencies:
+
+  ```sh
+  # Only required if they don't already exist on the local machine
+
+  # yarn
+  npm install --global yarn
+
+  # tailwind
+  yarn add tailwindcss
+  ```
+
+- Install project dependencies:
 
   ```sh
   # gems
@@ -41,7 +56,7 @@ The application was built using:
   yarn install
   ```
 
-- Starting application servers:
+- Start the application servers:
 
   ```sh
   # Terminal tab 1 (rails)
@@ -51,9 +66,10 @@ The application was built using:
   ./bin/webpack-dev-server
   ```
 
-- Running all the tests
+- Run the rspec tests:
 
       rspec spec
+
 
 
 Once your servers are up and running you can open `localhost:3000` in the browser and should see the following:
