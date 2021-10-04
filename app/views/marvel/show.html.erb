@@ -2,29 +2,31 @@
   <div class="max-w-md mx-auto bg-white mb-10 rounded-xl shadow-md overflow-hidden md:max-w-4xl">
     <div class="md:flex">
       <div class="md:flex-shrink-0">
-        <img class="h-full w-full object-cover md:w-48" src="<%= image_variants_helper(@character[:thumbnail], "portrait", "fantastic") %>" alt="Tony Stark aka IronMan">
+        <img class="h-full w-full object-cover md:w-48" src="<%= character_image_variants(@character["image_format"], @character["image_location"], "portrait", "fantastic") %>" alt="Tony Stark aka IronMan">
       </div>
       <div class="p-8">
         <a href="#" class="uppercase font-serif block mt-2 text-3xl leading-tight font-medium text-black hover:underline"><%= @character[:name] %></a>
-        <p class="mt-4 text-lg text-gray-500"><%= @character[:description] %></p>
-        <div class="tracking-wide mt-5 text-sm text-indigo-500 font-semibold"><%= @character[:attribute] %></div>
+        <p class="mt-4 text-lg text-gray-500"><%= @character["description"] %></p>
+        <div class="tracking-wide mt-5 text-sm text-indigo-500 font-semibold"><%= @character["attribution_text"] %></div>
       </div>
     </div>
   </div>
   <div class="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
     <div class="grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
-      <% @series.each do |series| %>
-        <a href="#" class="group">
-          <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
-            <img src="<%= image_variants_helper(series[:thumbnail], "standard", "amazing") %>" alt="series_image" class="w-full h-full object-center object-cover group-hover:opacity-75">
-          </div>
-          <h3 class="mt-4 text-sm text-gray-700">
-            <%= series[:description] %>
-          </h3>
-          <p class="mt-1 text-lg font-medium text-gray-900">
-            <%= series[:title] %>
-          </p>
-        </a>
+      <% unless @series == [] %>
+        <% @series.each do |series| %>
+          <a href="#" class="group">
+            <div class="w-full aspect-w-1 aspect-h-1 bg-gray-200 rounded-lg overflow-hidden xl:aspect-w-7 xl:aspect-h-8">
+              <img src="<%= series_image_variants(series["thumbnail"], "standard", "amazing") %>" alt="series_image" class="w-full h-full object-center object-cover group-hover:opacity-75">
+            </div>
+            <h3 class="mt-4 text-sm text-gray-700">
+              <%= series["description"] %>
+            </h3>
+            <p class="mt-1 text-lg font-medium text-gray-900">
+              <%= series["title"] %>
+            </p>
+          </a>
+        <% end %>
       <% end %>
     </div>
   </div>

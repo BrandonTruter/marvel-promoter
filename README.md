@@ -1,76 +1,73 @@
 # Marvel Promoter
 
-The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is a solution developed for [promote](https://promoteint.com) to integrate with the [MarvelAPI](http://developer.marvel.com/docs) and display a character with associated series.
-
-## Dependencies
-
-Before you begin, ensure you have met the following requirements:
-
-  * Recommended versions for `Ruby, Rails, Node`
-    * Ruby >= v3.0
-    * Rails >= v6.0
-    * Node >= v12.0
-
-## Technologies
-
-The application was built using:
-  - Node v16.10.0
-  - Ruby v3.0.2
-  - Rails v6.1.4.1
-  - RSpec-rails v5.0.2
-  - [Webpacker](https://github.com/rails/webpacker) v5.4.3
-  - [Tailwind CSS](https://tailwindcss.com) v2.2.14
-  - [Yarn](https://classic.yarnpkg.com/en/) v1.22.11
-
+The `marvel_backends` branch can be used to integrate with [MarvelAPI](http://developer.marvel.com/docs) API using an elixir microservice gateway app.
 
 ## Getting Started
 
-- Clone the repository:
+### Prerequisites
 
-      git clone git@github.com:BrandonTruter/marvel-promoter.git
+* Ruby: v3
+* Rails: v6  
+* Node: v12
+* Erlang: v24
+* Elixir: v1.12
 
-- Navigae to project directory:
+> make sure the following commands for each repo are ran in x2 separate terminals and directories
 
-      cd marvel-promoter
+### Setup the Rails Application
 
-- Install application dependencies:
+~~~bash
+$ git clone git@github.com:BrandonTruter/marvel-promoter.git
+$ cd marvel-promoter
+$ git checkout marvel_backends
+$ bundle install
+$ yarn install
+~~~
+
+
+### Setup the Elixir Gateway
+
+~~~bash
+$ git clone git@github.com:BrandonTruter/marvel_gateway.git
+$ cd marvel_gateway
+$ mix deps.get
+$ mix ecto.create
+$ mix ecto.migrate
+$ mix run priv/repo/seeds.exs
+~~~
+
+
+Install Erlang and Elixir
+
+```
+$ asdf install erlang 24.0
+$ asdf install elixir 1.12.0
+$ asdf install elixir 1.12.3
+$ asdf local erlang 24.0
+$ asdf local elixir 1.12.3
+$ mix archive.install hex phx_new
+```
+
+> the elixir app uses postgres so be make you have it installed and running on your system
+
+
+### Usage
+
+Start servers on both applications:
+
 
   ```sh
-  # Only required if they don't already exist on the local machine
-
-  # yarn
-  npm install --global yarn
-
-  # tailwind
-  yarn add tailwindcss
-  ```
-
-- Install project dependencies:
-
-  ```sh
-  # gems
-  bundle install
-
-  # yarn
-  yarn install
-  ```
-
-- Start the application servers:
-
-  ```sh
-  # Terminal tab 1 (rails)
+  # Terminal 1 (rails app)
   rails s
 
-  # Terminal tab 2 (webpack)
+  # Terminal 2 (rails app)
   ./bin/webpack-dev-server
+
+  # Terminal 3 (elixir app)
+  mix phx.server
   ```
 
-- Run the rspec tests:
-
-      rspec spec
-
-
-Once your servers are up and running you can open `localhost:3000` in the browser and should see the following:
+Now you can open `http://localhost:3000/` in the browser and should see the landing page:
 
 Marvel Character
 ![landing_page](readme_images/marvel_character.png)
