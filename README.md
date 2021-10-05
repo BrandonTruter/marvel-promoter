@@ -36,19 +36,7 @@ $ mix ecto.migrate
 $ mix run priv/repo/seeds.exs
 ~~~
 
-
-Install Erlang and Elixir
-
-```
-$ asdf install erlang 24.0
-$ asdf install elixir 1.12.0
-$ asdf install elixir 1.12.3
-$ asdf local erlang 24.0
-$ asdf local elixir 1.12.3
-$ mix archive.install hex phx_new
-```
-
-> the elixir app uses postgres so be make you have it installed and running on your system
+> for instructions to install erlang and elixir, please read the [README](http://developer.marvel.com/docs) of the elixir gateway repo
 
 
 ### Usage
