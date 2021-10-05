@@ -34,6 +34,10 @@ The application uses the following versions:
 
       cd marvel-promoter
 
+- Checkout the develop branch
+
+      git checkout develop
+
 - Install application dependencies:
 
   ```sh
@@ -65,11 +69,6 @@ The application uses the following versions:
   # Terminal tab 2 (webpack)
   ./bin/webpack-dev-server
   ```
-
-- Run the rspec tests:
-
-      rspec spec
-
 
 
 Once your servers are up and running you can open `localhost:3000` in the browser and should see the following:
