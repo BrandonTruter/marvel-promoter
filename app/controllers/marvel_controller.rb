@@ -1,14 +1,24 @@
 class MarvelController < ApplicationController
-  before_action :find_character
+  before_action :select_character
+  before_action :initialize_client
 
   def show
-    iron_man = @marvel_characters.iron_man
+    iron_man = @client.marvel_character(@character_id)
     @character = CharacterPromoter.new(iron_man).as_hero
-    @series = @marvel_characters.series(iron_man[:id])
+    @series = @client.marvel_series(@character_id)
   end
 
   private
-    def find_character
-      @marvel_characters = MarvelApi::Characters.new
-    end
+
+  def select_character
+    @character_id = 1009368
+  end
+
+  def initialize_client
+    @client = MarvelClient.new(api_key)
+  end
+
+  def api_key
+    MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]["public_key"]
+  end
 end
