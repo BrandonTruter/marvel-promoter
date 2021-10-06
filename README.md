@@ -1,77 +1,56 @@
 # Marvel Promoter
 
-The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is a solution to the [promote](https://promoteint.com) assessment for integrating with the [MarvelAPI](http://developer.marvel.com/docs) and displaying a character with associated series collections.
+The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is an assessment project for integrating with the [MarvelAPI](http://developer.marvel.com/docs) and displaying a character with associated series collections.
 
 ## Dependencies
 
 Before you begin, ensure you have met the following requirements:  
-
   - Node >= v12.0
   - Ruby >= v3.0
   - Rails >= v6.0
 
-
-## Technologies
-
-The application uses the following versions:
-
-  - Node v16.10.0  
-  - Ruby v3.0.2  
-  - Rails v6.1.4.1  
-  - [RSpec-rails](https://github.com/rspec/rspec-rails) v5.0.2
-  - [Webpacker](https://github.com/rails/webpacker) v5.4.3
-  - [Tailwind CSS](https://tailwindcss.com) v2.2.14
-  - [Yarn](https://classic.yarnpkg.com/en/) v1.22.11
-
-
 ## Getting Started
 
-- Clone the repository:
+Clone the repo
 
-      git clone git@github.com:BrandonTruter/marvel-promoter.git
+```bash
+git clone git@github.com:BrandonTruter/marvel-promoter.git
+```
 
-- Navigate to project directory:
+Navigate to project
 
-      cd marvel-promoter
+```bash
+cd marvel-promoter
+```
 
-- Checkout the develop branch
+Checkout this branch
 
-      git checkout develop
+```bash
+git checkout develop
+```
 
-- Install application dependencies:
+Install app dependencies
 
-  ```sh
-  # Only required if they don't already exist on the local machine
+```bash
+# gems
+bundle install
 
-  # yarn
-  npm install --global yarn
+# yarn
+yarn install
+```
 
-  # tailwind
-  yarn add tailwindcss
-  ```
+Start the servers
 
-- Install project dependencies:
+```bash
+```sh
+# Terminal tab 1 (rails)
+rails s
 
-  ```sh
-  # gems
-  bundle install
+# Terminal tab 2 (webpack)
+./bin/webpack-dev-server
+```
 
-  # yarn
-  yarn install
-  ```
-
-- Start the application servers:
-
-  ```sh
-  # Terminal tab 1 (rails)
-  rails s
-
-  # Terminal tab 2 (webpack)
-  ./bin/webpack-dev-server
-  ```
-
-
-Once your servers are up and running you can open `localhost:3000` in the browser and should see the following:
+You should now see the character landing page if you can navigate to `localhost:3000` in your browser.
 
 Marvel Character
 ![landing_page](readme_images/marvel_character.png)

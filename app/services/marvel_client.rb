@@ -1,4 +1,6 @@
 class MarvelClient
+  include Exceptions
+  include StatusCodes
   attr_reader :api_key, :timestamp
 
   def initialize(api_key = nil)
@@ -17,7 +19,8 @@ class MarvelClient
   def marvel_series(character_id)
     response = request(
       http_method: :get,
-      endpoint: "#{credentials["url"]}/characters/#{character_id}/series"
+      endpoint: "#{credentials["url"]}/characters/#{character_id}/series",
+      headers: {orderBy: "title"}
     )
     series_response = process_request(response)
     process_response(series_response)
@@ -28,7 +31,10 @@ class MarvelClient
   def client
     @_client ||= Faraday.new() do |client|
       client.adapter Faraday.default_adapter
+      # headers
+      client.headers['Accept'] = "*/*"
       client.headers['Content-Type'] = "application/json"
+      # params
       client.params['hash'] = gnereate_md5_hash()
       client.params['apikey'] = api_key
       client.params['ts'] = timestamp
@@ -36,8 +42,37 @@ class MarvelClient
     end
   end
 
-  def request(http_method:, endpoint:, params: {})
-    client.public_send(http_method, endpoint, params)
+  def request(http_method:, endpoint:, headers: {}, params: {})
+    client.public_send(http_method, endpoint, headers, params)
+  end
+
+  def process_request(response)
+    parsed_response = JSON.parse(response.body, symbolize_names: true)
+
+    return parsed_response if response.status == HTTP_OK_CODE
+
+    raise error_class, "Code: #{response.status}, response: #{response.body}"
+  end
+
+  def error_class
+    case response.status
+    when HTTP_BAD_REQUEST_CODE
+      BadRequestError
+    when HTTP_UNAUTHORIZED_CODE
+      UnauthorizedError
+    when HTTP_FORBIDDEN_CODE
+      UnauthorizedError
+    when HTTP_NOT_FOUND_CODE
+      NotFoundError
+    when API_NOT_ALLOWED_CODE
+      UnprocessableEntityError
+    when API_BAD_CREDENTIALS_CODE
+      UnauthorizedError
+    when API_REACHED_RATE_LIMIT
+      ApiRequestsQuotaReachedError
+    else
+      ApiError
+    end
   end
 
   def gnereate_md5_hash
@@ -46,14 +81,6 @@ class MarvelClient
 
   def credentials
     MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
-  end
-
-  def process_request(response)
-    if response.status == 200
-      JSON.parse(response.body, symbolize_names: true)
-    else
-      render_error(response.status, "API Request Failed")
-    end
   end
 
   def process_response(response)

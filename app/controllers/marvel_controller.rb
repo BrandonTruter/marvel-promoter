@@ -16,6 +16,7 @@ class MarvelController < ApplicationController
 
   def initialize_client
     @client = MarvelClient.new(api_key)
+    # @client = MarvelAPI::V2::Client.new(api_key)
   end
 
   def api_key
