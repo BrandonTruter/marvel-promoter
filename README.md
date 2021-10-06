@@ -1,15 +1,13 @@
 # Marvel Promoter
 
-The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is a solution developed for [promote](https://promoteint.com) to integrate with the [MarvelAPI](http://developer.marvel.com/docs) and display a character with associated series.
+The [marvel-promoter](https://github.com/BrandonTruter/marvel-promoter) repository is an assessment project for integrating with the [MarvelAPI](http://developer.marvel.com/docs).
 
 ## Dependencies
 
-Before you begin, ensure you have met the following requirements:
-
-  * Recommended versions for `Ruby, Rails, Node`
-    * Ruby >= v3.0
-    * Rails >= v6.0
-    * Node >= v12.0
+Before you begin, ensure you have meet the following recommended requirements for `Ruby, Rails, Node`
+  * Ruby >= v3.0
+  * Rails >= v6.0
+  * Node >= v12.0
 
 ## Technologies
 
