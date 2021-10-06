@@ -1,15 +1,17 @@
 module ApplicationHelper
 
   def image_variants_helper(thumbnail, ratio, size)
-    extension = thumbnail[:extension]
-    path = thumbnail[:path]
-    case ratio
-    when "landscape"
-      display_landscape_images(size, path, extension)
-    when "portrait"
-      display_portrait_images(size, path, extension)
-    else
-      display_standard_images(size, path, extension)
+    unless thumbnail.nil?
+      extension = thumbnail[:extension]
+      path = thumbnail[:path]
+      case ratio
+      when "landscape"
+        display_landscape_images(size, path, extension)
+      when "portrait"
+        display_portrait_images(size, path, extension)
+      else
+        display_standard_images(size, path, extension)
+      end
     end
   end
 

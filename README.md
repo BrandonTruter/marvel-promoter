@@ -15,7 +15,7 @@ The application was built using:
   - Node v16.10.0
   - Ruby v3.0.2
   - Rails v6.1.4.1
-  - RSpec-rails v5.0.2
+  - [RSpec-rails](https://github.com/rspec/rspec-rails) v5.0.2
   - [Webpacker](https://github.com/rails/webpacker) v5.4.3
   - [Tailwind CSS](https://tailwindcss.com) v2.2.14
   - [Yarn](https://classic.yarnpkg.com/en/) v1.22.11
@@ -27,7 +27,7 @@ The application was built using:
 
       git clone git@github.com:BrandonTruter/marvel-promoter.git
 
-- Navigae to project directory:
+- Navigate to project directory:
 
       cd marvel-promoter
 
@@ -62,10 +62,6 @@ The application was built using:
   # Terminal tab 2 (webpack)
   ./bin/webpack-dev-server
   ```
-
-- Run the rspec tests:
-
-      rspec spec
 
 
 Once your servers are up and running you can open `localhost:3000` in the browser and should see the following:
