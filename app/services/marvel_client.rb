@@ -1,29 +1,29 @@
 class MarvelClient
   include Exceptions
   include StatusCodes
-  attr_reader :api_key, :timestamp
+  attr_reader :timestamp
 
-  def initialize(api_key = nil)
-    @api_key = api_key
+  API_RESPONSE_LIMIT = 40
+  API_ENDPOINT = 'https://gateway.marvel.com/v1/public'.freeze
+
+  def initialize
     @timestamp = Time.now
   end
 
   def marvel_character(character_id)
-    response = request(
+    request(
       http_method: :get,
-      endpoint: "#{credentials["url"]}/characters/#{character_id}"
+      endpoint: "#{API_ENDPOINT}/characters/#{character_id}"
     )
-    process_request(response)
   end
 
   def marvel_series(character_id)
     response = request(
       http_method: :get,
-      endpoint: "#{credentials["url"]}/characters/#{character_id}/series",
-      headers: {orderBy: "title"}
+      endpoint: "#{API_ENDPOINT}/characters/#{character_id}/series",
+      headers: {'orderBy' => "title"}
     )
-    series_response = process_request(response)
-    process_response(series_response)
+    process_response(response)
   end
 
   private
@@ -36,17 +36,16 @@ class MarvelClient
       client.headers['Content-Type'] = "application/json"
       # params
       client.params['hash'] = gnereate_md5_hash()
-      client.params['apikey'] = api_key
+      client.params['apikey'] = ENV["PUBLIC_KEY"]
       client.params['ts'] = timestamp
-      client.params['limit'] = 40
+      client.params['limit'] = configs["limit"] || API_RESPONSE_LIMIT
     end
   end
 
   def request(http_method:, endpoint:, headers: {}, params: {})
-    client.public_send(http_method, endpoint, headers, params)
-  end
+    response = client.public_send(http_method, endpoint, headers, params)
+    puts "RESPONSE HEADERS: #{response.headers}"
 
-  def process_request(response)
     parsed_response = JSON.parse(response.body, symbolize_names: true)
 
     return parsed_response if response.status == HTTP_OK_CODE
@@ -76,10 +75,10 @@ class MarvelClient
   end
 
   def gnereate_md5_hash
-    Digest::MD5.hexdigest "#{timestamp}#{credentials["private_key"]}#{api_key}"
+    Digest::MD5.hexdigest "#{timestamp}#{ENV['PRIVATE_KEY']}#{ENV["PUBLIC_KEY"]}"
   end
 
-  def credentials
+  def configs
     MarvelPromoter::Application.config.MARVEL_CONFIG[Rails.env]
   end
 
@@ -93,6 +92,7 @@ class MarvelClient
         render_error(409, "not enough results")
       end
     else
+      raise error_class, "Code: #{response.status}, response: #{response.body}"
       render_error(response[:code], response[:status])
     end
   end

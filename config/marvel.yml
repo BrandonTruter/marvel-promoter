@@ -1,9 +1,5 @@
 development:
+  limit: 40
+  enable_gateway: false
   url: https://gateway.marvel.com/v1/public
-  public_key: 5f3ca374aec85caae447eff6ff94fed3
-  private_key: f10bc178862ee730c312491f165d4cc36d22d77c
-
-test:
-  url: https://gateway.marvel.com/v1/public
-  public_key: 5f3ca374aec85caae447eff6ff94fed3
-  private_key: f10bc178862ee730c312491f165d4cc36d22d77c
+  

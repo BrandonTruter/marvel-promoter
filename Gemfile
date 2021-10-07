@@ -20,6 +20,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   gem 'rspec-rails', '~> 5.0'
+  gem 'dotenv-rails'
 end
 
 group :development do
